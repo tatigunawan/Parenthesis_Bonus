@@ -6,6 +6,8 @@ def evaluate(a, b, op):
         return a + b
     elif op == '-':
         return a - b
+    elif op == '/':
+        return a/b
     else:  # op == '*'
         return a * b
 
