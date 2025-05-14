@@ -24,5 +24,6 @@ Our dataset consists of the following digits based off the problem: 6, 2, 0, 4
 
 ## Files 
 
-- PB_code.py : Implements Prim's algorithm without using any graph libraries
+- PB_code.py : Implements dynamic programming without using any graph libraries for the expression given
+- PB_code_gen.py: Implements dynamic programming without using any graph libraries for another case with multiple inputs
 - README.md : Explanation for the project 
