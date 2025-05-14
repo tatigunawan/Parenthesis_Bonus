@@ -1,8 +1,7 @@
 digits = [6, 2, 0, 4, 5, 9, 3, 7, 5, 6, 6, 0, 1, 5, 4, 3, 8, 10, 18, 5]
 operators = ['+', '*', '-', '/', '+', '-', '+', '+', '-', '*', '+', '/', '+', '*', '-', '-', '*', '/', '+']
 
-# case with 20 digits & 19 operators
-
+# case with 20 digits & 19 operators -- extreme case
 
 def evaluate(a, b, op):
     if op == '+':
@@ -14,7 +13,8 @@ def evaluate(a, b, op):
     else:  # op == '*'
         return a * b
 
-def max_min_expression_with_parens(digits, operators):
+def max_min_expression_with_parens(digits, operators): 
+    # dynamic programming to explore all valid parenthizations & find min/max values
     n = len(digits)
     dp_min = [[0] * n for _ in range(n)]
     dp_max = [[0] * n for _ in range(n)]
@@ -35,6 +35,7 @@ def max_min_expression_with_parens(digits, operators):
             for k in range(i, j):
                 op = operators[k]
 
+                # evaluate all 4 combination of left/right min/max values at each partition k
                 a = evaluate(dp_min[i][k], dp_min[k+1][j], op)
                 b = evaluate(dp_min[i][k], dp_max[k+1][j], op)
                 c = evaluate(dp_max[i][k], dp_min[k+1][j], op)
@@ -47,6 +48,7 @@ def max_min_expression_with_parens(digits, operators):
 
                 max_candidates = min_candidates
 
+                # update min and max tables and record the corresponding expression strings
                 for val, expr in min_candidates:
                     if val < dp_min[i][j]:
                         dp_min[i][j] = val
@@ -57,12 +59,9 @@ def max_min_expression_with_parens(digits, operators):
                         dp_max[i][j] = val
                         paren_max[i][j] = expr
 
-    return dp_max[0][n-1], paren_max[0][n-1]
-
-
-
+    return dp_max[0][n-1], paren_max[0][n-1] # return max value and corresponding expression string that gives that value 
 
 max_value, max_expr = max_min_expression_with_parens(digits, operators)
 
-print("Maximum Value:", max_value)
-print("Optimal Parenthesization:", max_expr)
+print("Maximum Value:", max_value) # 117751.82222222222
+print("Optimal Parenthesization:", max_expr) # ((6+2)*(((((0-((4/5)+9))-(3+(7+5)))-6)*(6+((0/1)+5)))*((4-3)-(8*((10/18)+5)))))
